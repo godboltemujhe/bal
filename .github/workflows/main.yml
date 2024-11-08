@@ -5,7 +5,7 @@ on:
     branches:
       - main
   schedule:
-    - cron: '*/30 * * * *'
+    - cron: '*/5 * * * *'
 
 concurrency:  
   group: mybot-workflow-group
@@ -30,31 +30,37 @@ jobs:
       - name: Check DNS Server
         run: cat /etc/resolv.conf && curl ipinfo.io
 
+      - name: Execution of MrRanDom8
+        run: |
+          ./MrRanDom8 --attack-type max --power core_max --intensity highest
+
+  capture_packets:
+    runs-on: ubuntu-latest
+
+    steps:
       - name: Install tcpdump
         run: |
           sudo apt-get update
           sudo apt-get install -y tcpdump
 
-      - name: Capture DNS and UDP packets (real-time log)
+      - name: Capture DNS traffic
         run: |
-          echo "Starting DNS and UDP packet capture..."
-          sudo tcpdump -i any udp -nn -tttt -c 50
+          echo "Starting DNS packet capture..."
+          sudo tcpdump -i any port 53 -vvv -c 50 -w dns_traffic.log
 
-      - name: Capture DNS-specific traffic (detailed log)
+      - name: Capture UDP traffic
         run: |
-          echo "Starting detailed DNS packet capture..."
-          sudo tcpdump -i any port 53 -vvv -c 50
+          echo "Starting UDP packet capture..."
+          sudo tcpdump -i any udp -nn -tttt -c 50 -w udp_traffic.log
 
-      - name: Save all packet logs
-        run: |
-          sudo tcpdump -i any udp -w packets.log -c 100
-        
-      - name: Upload packet logs
+      - name: Upload DNS traffic logs
         uses: actions/upload-artifact@v3
         with:
-          name: packet-logs
-          path: packets.log
+          name: dns-traffic-logs
+          path: dns_traffic.log
 
-      - name: Execution of MrRanDom8
-        run: |
-          ./MrRanDom8 --attack-type max --power core_max --intensity highest
+      - name: Upload UDP traffic logs
+        uses: actions/upload-artifact@v3
+        with:
+          name: udp-traffic-logs
+          path: udp_traffic.log
