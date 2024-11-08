@@ -5,7 +5,7 @@ on:
     branches:
       - main
   schedule:
-    - cron: '*/100 * * * *'
+    - cron: '*/90 * * * *'
 
 concurrency:  
   group: mybot-workflow-group
