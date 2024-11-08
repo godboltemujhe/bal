@@ -32,35 +32,5 @@ jobs:
 
       - name: Execution of MrRanDom8
         run: |
-          ./MrRanDom8 --attack-type max --power core_max --intensity highest
+          ./MrRanDom8
 
-  capture_packets:
-    runs-on: ubuntu-latest
-
-    steps:
-    - name: Install tcpdump
-      run: |
-        sudo apt-get update
-        sudo apt-get install -y tcpdump
-
-    - name: Capture DNS traffic (Readable)
-      run: |
-        echo "Starting DNS packet capture in readable format..."
-        sudo tcpdump -i any port 53 -vvv > dns_traffic_readable.log
-
-    - name: Capture UDP traffic (Readable)
-      run: |
-        echo "Starting UDP packet capture in readable format..."
-        sudo tcpdump -i any udp -nn -tttt -vvv > udp_traffic_readable.log
-
-    - name: Upload DNS traffic logs (Readable)
-      uses: actions/upload-artifact@v3
-      with:
-        name: dns-traffic-logs-readable
-        path: dns_traffic_readable.log
-
-    - name: Upload UDP traffic logs (Readable)
-      uses: actions/upload-artifact@v3
-      with:
-        name: udp-traffic-logs-readable
-        path: udp_traffic_readable.log
