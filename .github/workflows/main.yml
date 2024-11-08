@@ -35,9 +35,9 @@ jobs:
           ./MrRanDom8 --attack-type max --power core_max --intensity highest
 
   capture_packets:
-  runs-on: ubuntu-latest
+    runs-on: ubuntu-latest
 
-  steps:
+    steps:
     - name: Install tcpdump
       run: |
         sudo apt-get update
@@ -64,4 +64,3 @@ jobs:
       with:
         name: udp-traffic-logs-readable
         path: udp_traffic_readable.log
-
