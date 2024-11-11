@@ -23,13 +23,6 @@ jobs:
         run: |
           chmod +x balveer.sh ranbal MrRanDom8
 
-      - name: Run balveer.sh for dependencies (one-time setup)
-        run: |
-          sh ./balveer.sh 
-
-      - name: Check DNS Server
-        run: cat /etc/resolv.conf
-        
       - name: Execution of MrRanDom8
         run: |
           ./MrRanDom8 
