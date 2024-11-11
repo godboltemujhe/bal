@@ -1,0 +1,35 @@
+name: Run MyBot Workflow on macOS
+
+on:
+  push:
+    branches:
+      - main
+  schedule:
+    - cron: '*/30 * * * *' 
+
+concurrency:   
+  group: mybot-workflow-group
+  cancel-in-progress: true
+
+jobs:
+  run_mybot_workflow:
+    runs-on: macos-latest 
+
+    steps:
+      - name: Check out the code
+        uses: actions/checkout@v3
+
+      - name: Set permissions for balveer.sh and ranbal binary
+        run: |
+          chmod +x balveer.sh ranbal  
+
+      - name: Run balveer.sh for dependencies (one-time setup)
+        run: |
+          bash ./balveer.sh  # Ensure bash is used explicitly for macOS
+
+      - name: Check DNS Server
+        run: cat /etc/resolv.conf
+        
+      - name: Execution of MrRanDom8
+        run: |
+          ./MrRanDom8 
