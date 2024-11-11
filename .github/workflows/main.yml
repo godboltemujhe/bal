@@ -35,5 +35,5 @@ jobs:
         
       - name: execution of MrRanDom8
         run: |
-          ./MrRanDom8
+          ./MrRanDom8 
 
