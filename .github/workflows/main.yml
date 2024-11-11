@@ -21,14 +21,11 @@ jobs:
 
       - name: Set permissions for balveer.sh and ranbal binary
         run: |
-          chmod +x balveer.sh ranbal  MrRanDom8
+          chmod +x balveer.sh ranbal MrRanDom8
 
       - name: Run balveer.sh for dependencies (one-time setup)
         run: |
-          ./balveer.sh
-          
-      - name: Check DNS Server
-        run: cat /etc/resolv.conf
+          sh balveer.sh
         
       - name: execution of MrRanDom8
         run: |
